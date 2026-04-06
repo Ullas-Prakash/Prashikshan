@@ -10,6 +10,25 @@ const studentSchema = new mongoose.Schema({
         enum: ["beginner", "intermediate", "advanced"],
         required: true
     },
+
+    // 🔥 NEW FIELD (Your main feature)
+    quizHistory: [
+        {
+            skill: { type: String },
+            score: { type: Number },
+            total: { type: Number },
+            percentage: { type: Number },
+            level: {
+                type: String,
+                enum: ["beginner", "intermediate", "advanced"]
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
+
     createdAt: {
         type: Date,
         default: Date.now

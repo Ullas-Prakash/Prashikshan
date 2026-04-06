@@ -14,8 +14,7 @@ const studentRoutes = require("./routes/studentRoutes");
 app.use("/api/students", studentRoutes);
 
 // (Add later)
-const questionRoutes = require("./routes/questionRoutes");
-app.use("/api/questions", questionRoutes);
+
 
 // ✅ Test route
 app.get("/", (req, res) => {
