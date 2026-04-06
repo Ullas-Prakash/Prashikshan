@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+init.txt
+.env
+node_modules
+=======
 .env
 server/node_modules
 
+>>>>>>> 57e363215155be785de6ad832adcfae9e71a2581

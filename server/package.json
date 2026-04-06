@@ -7,7 +7,7 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ullas Prakash",
   "license": "ISC",
   "description": "",
   "dependencies": {
