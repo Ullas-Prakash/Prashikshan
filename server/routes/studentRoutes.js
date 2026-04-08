@@ -1,9 +1,46 @@
 const express = require("express");
 const router = express.Router();
 const Student = require("../models/Student");
+const { getCourses } = require("../services/youtubeService");
 
 
-// ✅ GET ALL STUDENTS
+// 🔥 RECOMMENDATION ROUTE FIRST (IMPORTANT)
+router.get("/recommend/:id", async (req, res) => {
+    try {
+        console.log("🚀 YOUTUBE ROUTE RUNNING");
+
+        const student = await Student.findById(req.params.id);
+
+        if (!student) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+
+        const recommendations = [];
+
+        for (let quiz of student.quizHistory) {
+            if (quiz.level === "beginner") {
+                const courses = await getCourses(quiz.skill);
+
+                recommendations.push({
+                    skill: quiz.skill,
+                    level: quiz.level,
+                    courses
+                });
+            }
+        }
+
+        res.json({
+            student: student.name,
+            recommendations
+        });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+// GET ALL STUDENTS
 router.get("/", async (req, res) => {
     try {
         const students = await Student.find();
@@ -14,7 +51,7 @@ router.get("/", async (req, res) => {
 });
 
 
-// ✅ GET STUDENT BY ID
+// GET STUDENT BY ID (KEEP LAST)
 router.get("/:id", async (req, res) => {
     try {
         const student = await Student.findById(req.params.id);
@@ -30,7 +67,7 @@ router.get("/:id", async (req, res) => {
 });
 
 
-// ✅ CREATE STUDENT (Onboarding)
+// CREATE STUDENT
 router.post("/add", async (req, res) => {
     try {
         const student = new Student(req.body);
@@ -42,14 +79,10 @@ router.post("/add", async (req, res) => {
 });
 
 
-// 🔥 SAVE QUIZ RESULT (CORE FEATURE)
+// SAVE QUIZ RESULT
 router.post("/quiz-result/:id", async (req, res) => {
     try {
         const { skill, score, total } = req.body;
-
-        if (!skill || score == null || total == null) {
-            return res.status(400).json({ message: "Missing fields" });
-        }
 
         const percentage = (score / total) * 100;
 
@@ -74,57 +107,8 @@ router.post("/quiz-result/:id", async (req, res) => {
         await student.save();
 
         res.json({
-            message: "Quiz result saved successfully",
-            result: {
-                skill,
-                score,
-                total,
-                percentage,
-                level
-            }
-        });
-
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-
-// 🚀 RECOMMENDATION ENGINE (CORE USP)
-router.get("/recommend/:id", async (req, res) => {
-    try {
-        const student = await Student.findById(req.params.id);
-
-        if (!student) {
-            return res.status(404).json({ message: "Student not found" });
-        }
-
-        const recommendations = [];
-
-        student.quizHistory.forEach((quiz) => {
-            if (quiz.level === "beginner") {
-                recommendations.push({
-                    skill: quiz.skill,
-                    suggestion: `Start with beginner tutorials for ${quiz.skill}`
-                });
-            } 
-            else if (quiz.level === "intermediate") {
-                recommendations.push({
-                    skill: quiz.skill,
-                    suggestion: `Practice intermediate problems in ${quiz.skill}`
-                });
-            } 
-            else {
-                recommendations.push({
-                    skill: quiz.skill,
-                    suggestion: `Apply for internships or advanced projects in ${quiz.skill}`
-                });
-            }
-        });
-
-        res.json({
-            student: student.name,
-            recommendations
+            message: "Quiz result saved",
+            result: { skill, score, total, percentage, level }
         });
 
     } catch (error) {
