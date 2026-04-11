@@ -4,42 +4,6 @@ const Student = require("../models/Student");
 const { getCourses } = require("../services/youtubeService");
 
 
-// 🔥 RECOMMENDATION ROUTE FIRST (IMPORTANT)
-router.get("/recommend/:id", async (req, res) => {
-    try {
-        console.log("🚀 YOUTUBE ROUTE RUNNING");
-
-        const student = await Student.findById(req.params.id);
-
-        if (!student) {
-            return res.status(404).json({ message: "Student not found" });
-        }
-
-        const recommendations = [];
-
-        for (let quiz of student.quizHistory) {
-            if (quiz.level === "beginner") {
-                const courses = await getCourses(quiz.skill);
-
-                recommendations.push({
-                    skill: quiz.skill,
-                    level: quiz.level,
-                    courses
-                });
-            }
-        }
-
-        res.json({
-            student: student.name,
-            recommendations
-        });
-
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-
 // GET ALL STUDENTS
 router.get("/", async (req, res) => {
     try {
@@ -51,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 
-// GET STUDENT BY ID (KEEP LAST)
+// GET STUDENT BY ID
 router.get("/:id", async (req, res) => {
     try {
         const student = await Student.findById(req.params.id);
@@ -73,23 +37,6 @@ router.post("/add", async (req, res) => {
         const student = new Student(req.body);
         await student.save();
         res.status(201).json(student);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-
-// UPDATE INTERESTS
-router.put("/update-interests/:id", async (req, res) => {
-    try {
-        const { skills, interests, level } = req.body;
-        const student = await Student.findByIdAndUpdate(
-            req.params.id,
-            { skills, interests, level },
-            { new: true }
-        );
-        if (!student) return res.status(404).json({ message: "Student not found" });
-        res.json(student);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -124,12 +71,57 @@ router.post("/quiz-result/:id", async (req, res) => {
         await student.save();
 
         res.json({
-            message: "Quiz result saved",
+            message: "Quiz result saved successfully",
             result: { skill, score, total, percentage, level }
         });
 
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+
+// 🔥 FINAL RECOMMENDATION API (FIXED)
+router.get("/recommend/:id", async (req, res) => {
+    try {
+        console.log("🚀 RECOMMENDATION API HIT");
+
+        const student = await Student.findById(req.params.id);
+
+        if (!student) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+
+        const recommendations = [];
+
+        // ❗ IMPORTANT FIX: HANDLE EMPTY QUIZ HISTORY
+        if (!student.quizHistory || student.quizHistory.length === 0) {
+            return res.json({
+                student: student.name,
+                recommendations: []
+            });
+        }
+
+        // 🔥 LOOP THROUGH ALL QUIZ RESULTS
+        for (let quiz of student.quizHistory) {
+
+            const courses = await getCourses(quiz.skill, quiz.level);
+
+            recommendations.push({
+                skill: quiz.skill,
+                level: quiz.level,
+                courses
+            });
+        }
+
+        res.json({
+            student: student.name,
+            recommendations
+        });
+
+    } catch (error) {
+        console.log("❌ ERROR:", error.message);
+        res.status(500).json({ error: "Failed to fetch recommendations" });
     }
 });
 
