@@ -15,6 +15,9 @@ app.use(express.json());   // 🔥 THIS LINE IS KEY
 const studentRoutes = require("./routes/studentRoutes");
 app.use("/api/students", studentRoutes);
 
+const quizRoutes = require("./routes/quizRoutes");
+app.use("/api/quiz", quizRoutes);
+
 // const questionRoutes = require("./routes/questionRoutes");
 // app.use("/api/questions", questionRoutes);
 

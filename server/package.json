@@ -43,6 +43,7 @@
     "get-proto": "^1.0.1",
     "glob-parent": "^5.1.2",
     "gopd": "^1.2.0",
+    "groq-sdk": "^1.1.2",
     "has-flag": "^3.0.0",
     "has-symbols": "^1.1.0",
     "hasown": "^2.0.2",
