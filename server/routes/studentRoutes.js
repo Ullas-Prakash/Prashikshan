@@ -79,6 +79,23 @@ router.post("/add", async (req, res) => {
 });
 
 
+// UPDATE INTERESTS
+router.put("/update-interests/:id", async (req, res) => {
+    try {
+        const { skills, interests, level } = req.body;
+        const student = await Student.findByIdAndUpdate(
+            req.params.id,
+            { skills, interests, level },
+            { new: true }
+        );
+        if (!student) return res.status(404).json({ message: "Student not found" });
+        res.json(student);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 // SAVE QUIZ RESULT
 router.post("/quiz-result/:id", async (req, res) => {
     try {
