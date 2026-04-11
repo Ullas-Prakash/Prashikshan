@@ -16,23 +16,58 @@ export default function Register() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      setError('Please fill in all fields')
-      return
-    }
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
-      return
-    }
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters')
-      return
-    }
-    setError('')
-    navigate('/skill-assessment')
+  const handleSubmit = async (e) => {
+  e.preventDefault()
+
+  if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+    setError('Please fill in all fields')
+    return
   }
+
+  if (formData.password !== formData.confirmPassword) {
+    setError('Passwords do not match')
+    return
+  }
+
+  if (formData.password.length < 6) {
+    setError('Password must be at least 6 characters')
+    return
+  }
+
+  setError('')
+
+  try {
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      skills: [],            // will fill later
+      interests: [],         // will fill in next page
+      level: "beginner"
+    }
+
+    const res = await fetch("http://localhost:5000/api/students/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    })
+
+    const data = await res.json()
+
+    console.log("Student created:", data)
+
+    // 🔥 VERY IMPORTANT: store student ID
+    localStorage.setItem("studentId", data._id)
+
+    // move to next step
+    navigate('/skill-assessment')
+
+  } catch (err) {
+    console.log(err)
+    setError("Something went wrong")
+  }
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center px-4 py-12">
