@@ -6,6 +6,8 @@ import Dashboard from '../pages/Dashboard'
 import Courses from '../pages/Courses'
 import Internships from '../pages/Internships'
 import SkillAssessment from '../pages/SkillAssessment'
+import Quiz from '../pages/Quiz'
+import Recommendations from '../pages/Recommendations'
 
 export default function AppRoutes() {
   return (
@@ -17,6 +19,8 @@ export default function AppRoutes() {
       <Route path="/courses" element={<Courses />} />
       <Route path="/internships" element={<Internships />} />
       <Route path="/skill-assessment" element={<SkillAssessment />} />
+      <Route path="/quiz" element={<Quiz />} />
+      <Route path="/recommendations" element={<Recommendations />} />
     </Routes>
   )
 }

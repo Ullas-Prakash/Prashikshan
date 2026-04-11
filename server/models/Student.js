@@ -27,21 +27,6 @@ const quizSchema = new mongoose.Schema({
         enum: ["beginner", "intermediate", "advanced"],
         required: true
     },
-<<<<<<< HEAD
-
-    // 🧠 NEW FIELD (IMPORTANT)
-    quizHistory: [
-        {
-            skill: String,
-            score: Number,
-            total: Number,
-            date: {
-                type: Date,
-                default: Date.now
-            }
-        }
-    ],
-=======
     date: {
         type: Date,
         default: Date.now
@@ -81,7 +66,6 @@ const studentSchema = new mongoose.Schema({
         type: [quizSchema],
         default: []
     },
->>>>>>> 42ff518863b2bcb019098237e8fcb9b250791707
 
     createdAt: {
         type: Date,

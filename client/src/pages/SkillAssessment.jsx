@@ -44,17 +44,28 @@ export default function SkillAssessment() {
   const allLevelsSelected = selectedSkills.every(s => levels[s])
 
   // Final Submit
-  const handleSubmit = () => {
-    const profile = {
-      skills: selectedSkills.map(id => ({
-        skill: id,
-        level: levels[id]
-      })),
-      interests
+  const handleSubmit = async () => {
+    const studentId = localStorage.getItem('studentId')
+    if (!studentId) return navigate('/register')
+
+    const payload = {
+      skills: selectedSkills,
+      interests: interests.trim() ? [interests.trim()] : [],
+      level: 'beginner'
     }
-    console.log('Student Profile:', profile)
-    // TODO: save to backend later
-    navigate('/dashboard')
+
+    try {
+      await fetch(`http://localhost:5000/api/students/update-interests/${studentId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      // store selected skills for quiz page
+      localStorage.setItem('selectedSkills', JSON.stringify(selectedSkills))
+      navigate('/quiz')
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (
