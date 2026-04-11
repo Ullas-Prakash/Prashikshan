@@ -29,32 +29,31 @@ export default function SkillAssessment() {
   const [interests, setInterests] = useState('')
   const navigate = useNavigate()
 
-  // Step 1: Toggle skill selection
   const toggleSkill = (id) => {
     setSelectedSkills(prev =>
       prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]
     )
   }
 
-  // Step 2: Set level for each skill
   const setLevel = (skillId, levelId) => {
     setLevels(prev => ({ ...prev, [skillId]: levelId }))
   }
 
   const allLevelsSelected = selectedSkills.every(s => levels[s])
 
-  // Final Submit
+  // ✅ UPDATED: Now navigates to /quiz with skills & interests
   const handleSubmit = () => {
-    const profile = {
-      skills: selectedSkills.map(id => ({
-        skill: id,
-        level: levels[id]
-      })),
-      interests
-    }
-    console.log('Student Profile:', profile)
-    // TODO: save to backend later
-    navigate('/dashboard')
+    const skillNames = selectedSkills.map(id => {
+      const skill = SKILLS.find(s => s.id === id)
+      return `${skill.label} (${levels[id]})`
+    })
+
+    navigate('/quiz', {
+      state: {
+        skills: skillNames,
+        interests
+      }
+    })
   }
 
   return (
@@ -200,7 +199,7 @@ export default function SkillAssessment() {
                 disabled={!interests.trim()}
                 className="flex-1 bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                Complete Profile 🎉
+                Start Quiz 🎯
               </button>
             </div>
           </div>
