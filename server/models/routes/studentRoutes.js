@@ -4,10 +4,10 @@ const Student = require("../models/Student");
 const { getCourses } = require("../services/youtubeService");
 
 
-// 🔥 RECOMMENDATION ROUTE FIRST (IMPORTANT)
+// 🔥 RECOMMENDATION FIRST (VERY IMPORTANT)
 router.get("/recommend/:id", async (req, res) => {
     try {
-        console.log("🚀 YOUTUBE ROUTE RUNNING");
+        console.log("NEW ROUTE HIT");
 
         const student = await Student.findById(req.params.id);
 
@@ -51,7 +51,7 @@ router.get("/", async (req, res) => {
 });
 
 
-// GET STUDENT BY ID (KEEP LAST)
+// GET STUDENT BY ID (KEEP THIS LAST)
 router.get("/:id", async (req, res) => {
     try {
         const student = await Student.findById(req.params.id);
@@ -65,56 +65,3 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
-
-// CREATE STUDENT
-router.post("/add", async (req, res) => {
-    try {
-        const student = new Student(req.body);
-        await student.save();
-        res.status(201).json(student);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-
-// SAVE QUIZ RESULT
-router.post("/quiz-result/:id", async (req, res) => {
-    try {
-        const { skill, score, total } = req.body;
-
-        const percentage = (score / total) * 100;
-
-        let level = "beginner";
-        if (percentage >= 80) level = "advanced";
-        else if (percentage >= 50) level = "intermediate";
-
-        const student = await Student.findById(req.params.id);
-
-        if (!student) {
-            return res.status(404).json({ message: "Student not found" });
-        }
-
-        student.quizHistory.push({
-            skill,
-            score,
-            total,
-            percentage,
-            level
-        });
-
-        await student.save();
-
-        res.json({
-            message: "Quiz result saved",
-            result: { skill, score, total, percentage, level }
-        });
-
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-
-module.exports = router;
