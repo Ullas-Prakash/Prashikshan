@@ -4,35 +4,40 @@ const Student = require("../models/Student");
 const { getCourses } = require("../services/youtubeService");
 
 
+// ML helper
+async function getMLLevels(scores) {
+    try {
+        const res = await fetch("http://127.0.0.1:8000/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ scores })
+        });
+        const data = await res.json();
+        return data.levels;
+    } catch (error) {
+        console.log("ML API Error:", error.message);
+        return null;
+    }
+}
+
 // 🔥 RECOMMENDATION ROUTE FIRST (IMPORTANT)
 router.get("/recommend/:id", async (req, res) => {
     try {
-        console.log("🚀 YOUTUBE ROUTE RUNNING");
-
         const student = await Student.findById(req.params.id);
+        if (!student) return res.status(404).json({ message: "Student not found" });
 
-        if (!student) {
-            return res.status(404).json({ message: "Student not found" });
-        }
+        const scores = student.quizHistory.map(q => q.percentage / 100);
+        const levels = await getMLLevels(scores);
 
-        const recommendations = [];
+        const recommendations = await Promise.all(
+            student.quizHistory.map(async (quiz, index) => ({
+                skill: quiz.skill,
+                level: levels ? levels[index] : quiz.level,
+                courses: await getCourses(quiz.skill)
+            }))
+        );
 
-        for (let quiz of student.quizHistory) {
-            if (quiz.level === "beginner") {
-                const courses = await getCourses(quiz.skill);
-
-                recommendations.push({
-                    skill: quiz.skill,
-                    level: quiz.level,
-                    courses
-                });
-            }
-        }
-
-        res.json({
-            student: student.name,
-            recommendations
-        });
+        res.json({ student: student.name, recommendations });
 
     } catch (error) {
         res.status(500).json({ error: error.message });
