@@ -56,6 +56,11 @@ export default function Register() {
 
     const data = await res.json()
 
+    if (!res.ok) {
+      setError(data.error || "Something went wrong")
+      return
+    }
+
     console.log("Student created:", data)
 
     // 🔥 VERY IMPORTANT: store student ID

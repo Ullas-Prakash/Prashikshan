@@ -61,6 +61,12 @@ router.post("/login", async (req, res) => {
 // CREATE STUDENT
 router.post("/add", async (req, res) => {
     try {
+        // Check if email already exists
+        const existing = await Student.findOne({ email: req.body.email?.toLowerCase() });
+        if (existing) {
+            return res.status(409).json({ error: "An account with this email already exists. Please login instead." });
+        }
+
         const student = new Student(req.body);
         await student.save();
         res.status(201).json(student);
