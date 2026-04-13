@@ -31,12 +31,56 @@ router.get("/:id", async (req, res) => {
 });
 
 
+// LOGIN STUDENT
+router.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: "Email and password are required" });
+        }
+
+        const student = await Student.findOne({ email: email.toLowerCase() });
+
+        if (!student) {
+            return res.status(404).json({ message: "No account found with this email" });
+        }
+
+        if (student.password !== password) {
+            return res.status(401).json({ message: "Incorrect password" });
+        }
+
+        res.json({ message: "Login successful", student });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 // CREATE STUDENT
 router.post("/add", async (req, res) => {
     try {
         const student = new Student(req.body);
         await student.save();
         res.status(201).json(student);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+// UPDATE STUDENT SKILLS
+router.patch("/:id/skills", async (req, res) => {
+    try {
+        const { skills } = req.body;
+        const student = await Student.findByIdAndUpdate(
+            req.params.id,
+            { skills },
+            { new: true }
+        );
+        if (!student) return res.status(404).json({ message: "Student not found" });
+        res.json(student);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

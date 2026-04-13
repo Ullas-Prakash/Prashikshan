@@ -1,6 +1,14 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
+  const isLoggedIn = !!localStorage.getItem('studentId')
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('studentId')
+    navigate('/')
+  }
+
   return (
     <nav className="bg-blue-700 text-white px-8 py-4 flex justify-between items-center shadow-md">
       {/* Logo */}
@@ -18,18 +26,29 @@ export default function Navbar() {
 
       {/* Auth Buttons */}
       <div className="flex gap-3">
-        <Link
-          to="/login"
-          className="border border-white px-4 py-1.5 rounded-full hover:bg-white hover:text-blue-700 transition text-sm"
-        >
-          Login
-        </Link>
-        <Link
-          to="/register"
-          className="bg-yellow-400 text-blue-900 px-4 py-1.5 rounded-full font-semibold hover:bg-yellow-300 transition text-sm"
-        >
-          Register
-        </Link>
+        {isLoggedIn ? (
+          <button
+            onClick={handleLogout}
+            className="border border-white px-4 py-1.5 rounded-full hover:bg-white hover:text-blue-700 transition text-sm"
+          >
+            Logout
+          </button>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="border border-white px-4 py-1.5 rounded-full hover:bg-white hover:text-blue-700 transition text-sm"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="bg-yellow-400 text-blue-900 px-4 py-1.5 rounded-full font-semibold hover:bg-yellow-300 transition text-sm"
+            >
+              Register
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   )

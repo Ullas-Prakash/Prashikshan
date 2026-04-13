@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
 
 export default function Home() {
+  const navigate = useNavigate()
+  const isLoggedIn = !!localStorage.getItem('studentId')
 
   useEffect(() => {
       fetch("http://localhost:5000/")
@@ -22,9 +24,15 @@ export default function Home() {
           and connect with internships that match their skills.
         </p>
         <div className="flex gap-4">
-          <Link to="/register" className="bg-blue-700 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-800 transition">
-            Get Started Free
-          </Link>
+          {isLoggedIn ? (
+            <Link to="/dashboard" className="bg-blue-700 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-800 transition">
+              Go to Dashboard
+            </Link>
+          ) : (
+            <Link to="/register" className="bg-blue-700 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-800 transition">
+              Get Started Free
+            </Link>
+          )}
           <Link to="/courses" className="border border-blue-700 text-blue-700 px-6 py-3 rounded-full font-semibold hover:bg-blue-50 transition">
             Browse Courses
           </Link>
