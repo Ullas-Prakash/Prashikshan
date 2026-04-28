@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Login() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
 
@@ -9,15 +10,34 @@ export default function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields')
       return
     }
     setError('')
-    // TODO: connect to backend API later
-    console.log('Logging in with:', formData)
+
+    try {
+      const res = await fetch("http://localhost:5000/api/students/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email, password: formData.password })
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        setError(data.message || "Login failed")
+        return
+      }
+
+      localStorage.setItem("studentId", data.student._id)
+      navigate('/dashboard')
+
+    } catch (err) {
+      setError("Something went wrong. Please try again.")
+    }
   }
 
   return (

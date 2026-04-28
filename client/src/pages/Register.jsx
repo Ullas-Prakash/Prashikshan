@@ -40,6 +40,7 @@ export default function Register() {
     const payload = {
       name: formData.name,
       email: formData.email,
+      password: formData.password,
       skills: [],            // will fill later
       interests: [],         // will fill in next page
       level: "beginner"
@@ -54,6 +55,11 @@ export default function Register() {
     })
 
     const data = await res.json()
+
+    if (!res.ok) {
+      setError(data.error || "Something went wrong")
+      return
+    }
 
     console.log("Student created:", data)
 

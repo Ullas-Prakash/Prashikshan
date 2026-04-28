@@ -28,13 +28,24 @@ export default function SkillAssessment() {
     })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const skillNames = selectedSkills.map(id => {
       const skill = SKILLS.find(s => s.id === id)
       return skill.label
     })
 
     localStorage.setItem("selectedSkills", JSON.stringify(skillNames))
+
+    // Save skills to MongoDB
+    const studentId = localStorage.getItem("studentId")
+    if (studentId) {
+      await fetch(`http://localhost:5000/api/students/${studentId}/skills`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ skills: skillNames })
+      })
+    }
+
     navigate('/quiz')
   }
 

@@ -17,6 +17,9 @@ app.use("/api/students", studentRoutes);
 const quizRoutes = require("./routes/quizRoutes");
 app.use("/api/quiz", quizRoutes);
 
+const courseRoutes = require("./routes/courseRoutes");
+app.use("/api/courses", courseRoutes);
+
 // const questionRoutes = require("./routes/questionRoutes");
 // app.use("/api/questions", questionRoutes);
 
