@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Student = require("../models/Student");
 const { getCourses } = require("../services/youtubeService");
-
+const { getMixedQuiz } = require("../services/quizService");
 
 // ML helper
 async function getMLLevels(scores) {
@@ -20,11 +20,28 @@ async function getMLLevels(scores) {
     }
 }
 
-// 🔥 RECOMMENDATION ROUTE FIRST (IMPORTANT)
+// GENERATE QUIZ (local dataset, mixed difficulty)
+router.post("/generate-quiz", async (req, res) => {
+    try {
+        const { skill } = req.body;
+        if (!skill) return res.status(400).json({ error: "skill is required" });
+        const questions = getMixedQuiz(skill);
+        if (questions.length === 0) return res.status(404).json({ error: `No questions found for: ${skill}` });
+        res.json({ questions });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// RECOMMENDATION ROUTE
 router.get("/recommend/:id", async (req, res) => {
     try {
         const student = await Student.findById(req.params.id);
         if (!student) return res.status(404).json({ message: "Student not found" });
+
+        if (!student.quizHistory || student.quizHistory.length === 0) {
+            return res.json({ student: student.name, recommendations: [] });
+        }
 
         const scores = student.quizHistory.map(q => q.percentage / 100);
         const levels = await getMLLevels(scores);
@@ -38,12 +55,10 @@ router.get("/recommend/:id", async (req, res) => {
         );
 
         res.json({ student: student.name, recommendations });
-
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
-
 
 // GET ALL STUDENTS
 router.get("/", async (req, res) => {
@@ -55,58 +70,38 @@ router.get("/", async (req, res) => {
     }
 });
 
-
 // GET STUDENT BY ID
 router.get("/:id", async (req, res) => {
     try {
         const student = await Student.findById(req.params.id);
-
-        if (!student) {
-            return res.status(404).json({ message: "Student not found" });
-        }
-
+        if (!student) return res.status(404).json({ message: "Student not found" });
         res.json(student);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-
-// LOGIN STUDENT
+// LOGIN
 router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({ message: "Email and password are required" });
-        }
+        if (!email || !password) return res.status(400).json({ message: "Email and password are required" });
 
         const student = await Student.findOne({ email: email.toLowerCase() });
-
-        if (!student) {
-            return res.status(404).json({ message: "No account found with this email" });
-        }
-
-        if (student.password !== password) {
-            return res.status(401).json({ message: "Incorrect password" });
-        }
+        if (!student) return res.status(404).json({ message: "No account found with this email" });
+        if (student.password !== password) return res.status(401).json({ message: "Incorrect password" });
 
         res.json({ message: "Login successful", student });
-
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-
 // CREATE STUDENT
 router.post("/add", async (req, res) => {
     try {
-        // Check if email already exists
         const existing = await Student.findOne({ email: req.body.email?.toLowerCase() });
-        if (existing) {
-            return res.status(409).json({ error: "An account with this email already exists. Please login instead." });
-        }
+        if (existing) return res.status(409).json({ error: "An account with this email already exists. Please login instead." });
 
         const student = new Student(req.body);
         await student.save();
@@ -116,16 +111,11 @@ router.post("/add", async (req, res) => {
     }
 });
 
-
 // UPDATE STUDENT SKILLS
 router.patch("/:id/skills", async (req, res) => {
     try {
         const { skills } = req.body;
-        const student = await Student.findByIdAndUpdate(
-            req.params.id,
-            { skills },
-            { new: true }
-        );
+        const student = await Student.findByIdAndUpdate(req.params.id, { skills }, { new: true });
         if (!student) return res.status(404).json({ message: "Student not found" });
         res.json(student);
     } catch (error) {
@@ -133,12 +123,10 @@ router.patch("/:id/skills", async (req, res) => {
     }
 });
 
-
 // SAVE QUIZ RESULT
 router.post("/quiz-result/:id", async (req, res) => {
     try {
         const { skill, score, total } = req.body;
-
         const percentage = (score / total) * 100;
 
         let level = "beginner";
@@ -146,75 +134,15 @@ router.post("/quiz-result/:id", async (req, res) => {
         else if (percentage >= 50) level = "intermediate";
 
         const student = await Student.findById(req.params.id);
+        if (!student) return res.status(404).json({ message: "Student not found" });
 
-        if (!student) {
-            return res.status(404).json({ message: "Student not found" });
-        }
-
-        student.quizHistory.push({
-            skill,
-            score,
-            total,
-            percentage,
-            level
-        });
-
+        student.quizHistory.push({ skill, score, total, percentage, level });
         await student.save();
 
-        res.json({
-            message: "Quiz result saved successfully",
-            result: { skill, score, total, percentage, level }
-        });
-
+        res.json({ message: "Quiz result saved successfully", result: { skill, score, total, percentage, level } });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
-
-
-// 🔥 FINAL RECOMMENDATION API (FIXED)
-router.get("/recommend/:id", async (req, res) => {
-    try {
-        console.log("🚀 RECOMMENDATION API HIT");
-
-        const student = await Student.findById(req.params.id);
-
-        if (!student) {
-            return res.status(404).json({ message: "Student not found" });
-        }
-
-        const recommendations = [];
-
-        // ❗ IMPORTANT FIX: HANDLE EMPTY QUIZ HISTORY
-        if (!student.quizHistory || student.quizHistory.length === 0) {
-            return res.json({
-                student: student.name,
-                recommendations: []
-            });
-        }
-
-        // 🔥 LOOP THROUGH ALL QUIZ RESULTS
-        for (let quiz of student.quizHistory) {
-
-            const courses = await getCourses(quiz.skill, quiz.level);
-
-            recommendations.push({
-                skill: quiz.skill,
-                level: quiz.level,
-                courses
-            });
-        }
-
-        res.json({
-            student: student.name,
-            recommendations
-        });
-
-    } catch (error) {
-        console.log("❌ ERROR:", error.message);
-        res.status(500).json({ error: "Failed to fetch recommendations" });
-    }
-});
-
 
 module.exports = router;

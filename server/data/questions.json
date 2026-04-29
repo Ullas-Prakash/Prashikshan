@@ -1,0 +1,331 @@
+{
+  "JavaScript": {
+    "beginner": [
+      { "question": "Which keyword declares a block-scoped variable in JavaScript?", "options": ["var", "let", "define", "static"], "answer": "let" },
+      { "question": "What does `typeof null` return in JavaScript?", "options": ["null", "undefined", "object", "boolean"], "answer": "object" },
+      { "question": "Which method adds an element to the end of an array?", "options": ["push()", "pop()", "shift()", "unshift()"], "answer": "push()" },
+      { "question": "What is the output of `2 + '3'` in JavaScript?", "options": ["5", "23", "NaN", "Error"], "answer": "23" },
+      { "question": "Which symbol is used for single-line comments in JavaScript?", "options": ["//", "#", "/*", "--"], "answer": "//" },
+      { "question": "What does `===` check in JavaScript?", "options": ["Value only", "Type only", "Value and type", "Reference"], "answer": "Value and type" },
+      { "question": "Which built-in method converts a JSON string to an object?", "options": ["JSON.parse()", "JSON.stringify()", "JSON.convert()", "JSON.decode()"], "answer": "JSON.parse()" },
+      { "question": "What is the correct way to declare a function in JavaScript?", "options": ["function myFunc() {}", "func myFunc() {}", "def myFunc() {}", "void myFunc() {}"], "answer": "function myFunc() {}" }
+    ],
+    "intermediate": [
+      { "question": "What does the `bind()` method do in JavaScript?", "options": ["Calls a function immediately", "Creates a new function with a fixed `this`", "Copies an object", "Binds two arrays"], "answer": "Creates a new function with a fixed `this`" },
+      { "question": "What is a closure in JavaScript?", "options": ["A function with no return value", "A function that remembers its outer scope", "A sealed object", "An immediately invoked function"], "answer": "A function that remembers its outer scope" },
+      { "question": "Which array method returns a new array with elements that pass a test?", "options": ["map()", "filter()", "reduce()", "find()"], "answer": "filter()" },
+      { "question": "What does `Promise.all()` do?", "options": ["Runs promises sequentially", "Resolves when all promises resolve", "Rejects all promises", "Cancels pending promises"], "answer": "Resolves when all promises resolve" },
+      { "question": "What is event delegation in JavaScript?", "options": ["Removing event listeners", "Attaching one listener to a parent for child events", "Cloning events", "Preventing default behavior"], "answer": "Attaching one listener to a parent for child events" },
+      { "question": "What does the spread operator `...` do?", "options": ["Deletes array elements", "Expands iterable elements", "Creates a deep copy", "Merges classes"], "answer": "Expands iterable elements" },
+      { "question": "Which method is used to chain promises?", "options": [".next()", ".then()", ".after()", ".resolve()"], "answer": ".then()" },
+      { "question": "What is the purpose of `async/await`?", "options": ["To run code in parallel threads", "To write asynchronous code in a synchronous style", "To block the event loop", "To create web workers"], "answer": "To write asynchronous code in a synchronous style" }
+    ],
+    "advanced": [
+      { "question": "What is the event loop in JavaScript?", "options": ["A loop that iterates over DOM elements", "A mechanism that handles async callbacks via call stack and queue", "A built-in for loop variant", "A loop for handling errors"], "answer": "A mechanism that handles async callbacks via call stack and queue" },
+      { "question": "What does `Object.freeze()` do?", "options": ["Deletes all properties", "Makes an object immutable", "Clones an object deeply", "Seals prototype chain"], "answer": "Makes an object immutable" },
+      { "question": "What is a WeakMap in JavaScript?", "options": ["A map with weak references to keys", "A smaller version of Map", "A map that auto-sorts keys", "A deprecated Map type"], "answer": "A map with weak references to keys" },
+      { "question": "What is the difference between `call` and `apply`?", "options": ["No difference", "`call` takes args as list, `apply` takes args as array", "`apply` takes args as list, `call` takes args as array", "`call` is async, `apply` is sync"], "answer": "`call` takes args as list, `apply` takes args as array" },
+      { "question": "What is a Proxy object in JavaScript?", "options": ["A network proxy", "An object that intercepts operations on another object", "A copy of an object", "A frozen object"], "answer": "An object that intercepts operations on another object" },
+      { "question": "What does `Symbol()` create?", "options": ["A string primitive", "A unique and immutable primitive value", "A numeric identifier", "A boolean flag"], "answer": "A unique and immutable primitive value" },
+      { "question": "What is tail call optimization?", "options": ["Optimizing the last import", "Reusing stack frames for tail-position recursive calls", "Removing unused variables", "Inlining small functions"], "answer": "Reusing stack frames for tail-position recursive calls" },
+      { "question": "What is the purpose of generators in JavaScript?", "options": ["To generate random numbers", "To create functions that can pause and resume execution", "To generate HTML templates", "To create worker threads"], "answer": "To create functions that can pause and resume execution" }
+    ]
+  },
+
+  "React": {
+    "beginner": [
+      { "question": "What is JSX in React?", "options": ["A JavaScript extension for writing HTML-like syntax", "A CSS preprocessor", "A database query language", "A testing framework"], "answer": "A JavaScript extension for writing HTML-like syntax" },
+      { "question": "Which hook is used to manage state in a functional component?", "options": ["useEffect", "useState", "useContext", "useRef"], "answer": "useState" },
+      { "question": "What does the `key` prop do in a list?", "options": ["Styles the element", "Helps React identify which items changed", "Adds an ID attribute", "Enables animations"], "answer": "Helps React identify which items changed" },
+      { "question": "How do you pass data from a parent to a child component?", "options": ["Via state", "Via props", "Via context only", "Via refs"], "answer": "Via props" },
+      { "question": "What is the virtual DOM?", "options": ["A real browser DOM", "A lightweight in-memory representation of the DOM", "A server-side DOM", "A CSS rendering engine"], "answer": "A lightweight in-memory representation of the DOM" },
+      { "question": "Which method renders a React component to the DOM?", "options": ["React.render()", "ReactDOM.render()", "React.mount()", "ReactDOM.mount()"], "answer": "ReactDOM.render()" },
+      { "question": "What does `useEffect` with an empty dependency array do?", "options": ["Runs on every render", "Runs only once after mount", "Runs before unmount", "Never runs"], "answer": "Runs only once after mount" },
+      { "question": "What is a controlled component in React?", "options": ["A component with no state", "A form element whose value is controlled by React state", "A component wrapped in HOC", "A memoized component"], "answer": "A form element whose value is controlled by React state" }
+    ],
+    "intermediate": [
+      { "question": "What is the Context API used for?", "options": ["Routing between pages", "Sharing state across components without prop drilling", "Fetching data from APIs", "Managing side effects"], "answer": "Sharing state across components without prop drilling" },
+      { "question": "What does `React.memo` do?", "options": ["Memoizes a value", "Prevents re-render if props haven't changed", "Creates a ref", "Caches API responses"], "answer": "Prevents re-render if props haven't changed" },
+      { "question": "What is the purpose of `useCallback`?", "options": ["To memoize a function reference", "To call a function after render", "To create a callback ref", "To debounce a function"], "answer": "To memoize a function reference" },
+      { "question": "What is prop drilling?", "options": ["Passing props through many nested components", "Drilling into a prop object", "Destructuring props", "Validating prop types"], "answer": "Passing props through many nested components" },
+      { "question": "What does `useReducer` return?", "options": ["A state and a dispatch function", "A ref and a setter", "A context and a provider", "A memoized value"], "answer": "A state and a dispatch function" },
+      { "question": "What is a Higher-Order Component (HOC)?", "options": ["A component with many children", "A function that takes a component and returns a new component", "A component with high z-index", "A class component"], "answer": "A function that takes a component and returns a new component" },
+      { "question": "How do you prevent a component from re-rendering unnecessarily?", "options": ["Use shouldComponentUpdate or React.memo", "Use useEffect", "Use useState", "Use useRef"], "answer": "Use shouldComponentUpdate or React.memo" },
+      { "question": "What is the purpose of `useRef`?", "options": ["To trigger re-renders", "To persist a mutable value without causing re-renders", "To reference context", "To create a reducer"], "answer": "To persist a mutable value without causing re-renders" }
+    ],
+    "advanced": [
+      { "question": "What is React Fiber?", "options": ["A CSS-in-JS library", "The reconciliation engine rewrite for incremental rendering", "A state management library", "A routing library"], "answer": "The reconciliation engine rewrite for incremental rendering" },
+      { "question": "What is concurrent mode in React?", "options": ["Running two React apps simultaneously", "Allowing React to interrupt rendering for higher-priority updates", "Multi-threaded rendering", "Server-side rendering mode"], "answer": "Allowing React to interrupt rendering for higher-priority updates" },
+      { "question": "What does `Suspense` do in React?", "options": ["Pauses rendering until a condition is met", "Suspends network requests", "Delays state updates", "Pauses animations"], "answer": "Pauses rendering until a condition is met" },
+      { "question": "What is code splitting in React?", "options": ["Splitting CSS from JS", "Splitting a component into smaller ones", "Lazy-loading parts of the app to reduce bundle size", "Splitting state into multiple stores"], "answer": "Lazy-loading parts of the app to reduce bundle size" },
+      { "question": "What is the purpose of `React.lazy()`?", "options": ["To lazily evaluate expressions", "To dynamically import a component", "To defer state updates", "To create lazy refs"], "answer": "To dynamically import a component" },
+      { "question": "What is the reconciliation algorithm in React?", "options": ["The process of syncing state with the server", "The process of diffing the virtual DOM to update the real DOM", "The process of resolving promises", "The process of compiling JSX"], "answer": "The process of diffing the virtual DOM to update the real DOM" },
+      { "question": "What is a render prop pattern?", "options": ["Passing a render function as a prop to share logic", "Rendering props as HTML attributes", "A prop that controls visibility", "A prop that triggers re-render"], "answer": "Passing a render function as a prop to share logic" },
+      { "question": "What does `useImperativeHandle` do?", "options": ["Handles imperative animations", "Customizes the instance value exposed when using refs", "Creates imperative state updates", "Handles form submissions imperatively"], "answer": "Customizes the instance value exposed when using refs" }
+    ]
+  },
+
+  "Python": {
+    "beginner": [
+      { "question": "Which keyword is used to define a function in Python?", "options": ["func", "def", "function", "define"], "answer": "def" },
+      { "question": "What data type is `[1, 2, 3]` in Python?", "options": ["tuple", "set", "list", "array"], "answer": "list" },
+      { "question": "How do you print output in Python?", "options": ["echo()", "console.log()", "print()", "System.out.println()"], "answer": "print()" },
+      { "question": "Which operator is used for exponentiation in Python?", "options": ["^", "**", "^^", "exp()"], "answer": "**" },
+      { "question": "What is the correct way to create a comment in Python?", "options": ["// comment", "# comment", "/* comment */", "-- comment"], "answer": "# comment" },
+      { "question": "What does `len()` return?", "options": ["The last element", "The number of items in an object", "The memory size", "The type of object"], "answer": "The number of items in an object" },
+      { "question": "Which of these is an immutable data type in Python?", "options": ["list", "dict", "set", "tuple"], "answer": "tuple" },
+      { "question": "How do you start a for loop in Python?", "options": ["for i in range(10):", "for (i=0; i<10; i++)", "foreach i in range(10):", "loop i from 0 to 10:"], "answer": "for i in range(10):" }
+    ],
+    "intermediate": [
+      { "question": "What is a list comprehension in Python?", "options": ["A way to document lists", "A concise way to create lists using a single line", "A method to sort lists", "A way to merge lists"], "answer": "A concise way to create lists using a single line" },
+      { "question": "What does the `*args` parameter allow?", "options": ["Keyword arguments only", "A variable number of positional arguments", "A single required argument", "Default arguments"], "answer": "A variable number of positional arguments" },
+      { "question": "What is a decorator in Python?", "options": ["A CSS-like styling tool", "A function that wraps another function to extend its behavior", "A class attribute", "A type annotation"], "answer": "A function that wraps another function to extend its behavior" },
+      { "question": "What does `__init__` do in a Python class?", "options": ["Destroys the object", "Initializes a new instance of the class", "Imports a module", "Defines a static method"], "answer": "Initializes a new instance of the class" },
+      { "question": "What is the difference between `is` and `==` in Python?", "options": ["No difference", "`is` checks identity, `==` checks equality", "`==` checks identity, `is` checks equality", "`is` is for strings only"], "answer": "`is` checks identity, `==` checks equality" },
+      { "question": "What does `yield` do in a Python function?", "options": ["Returns a value and ends the function", "Pauses the function and returns a value, making it a generator", "Raises an exception", "Imports a module"], "answer": "Pauses the function and returns a value, making it a generator" },
+      { "question": "What is the purpose of `with` statement in Python?", "options": ["To create a loop", "To handle context management and ensure cleanup", "To define a class", "To import modules"], "answer": "To handle context management and ensure cleanup" },
+      { "question": "What does `map()` do in Python?", "options": ["Creates a dictionary", "Applies a function to every item in an iterable", "Filters items from a list", "Sorts a list"], "answer": "Applies a function to every item in an iterable" }
+    ],
+    "advanced": [
+      { "question": "What is the GIL in Python?", "options": ["Global Import Library", "Global Interpreter Lock that prevents true multi-threading", "A garbage collection mechanism", "A global variable scope"], "answer": "Global Interpreter Lock that prevents true multi-threading" },
+      { "question": "What are metaclasses in Python?", "options": ["Abstract base classes", "Classes whose instances are classes themselves", "Classes with no methods", "Deprecated class types"], "answer": "Classes whose instances are classes themselves" },
+      { "question": "What is the purpose of `__slots__`?", "options": ["To define allowed methods", "To restrict instance attributes and reduce memory usage", "To create abstract methods", "To define class-level constants"], "answer": "To restrict instance attributes and reduce memory usage" },
+      { "question": "What is a context manager protocol?", "options": ["A network protocol", "Implementing `__enter__` and `__exit__` methods", "A threading protocol", "A file I/O protocol"], "answer": "Implementing `__enter__` and `__exit__` methods" },
+      { "question": "What does `functools.lru_cache` do?", "options": ["Clears the cache", "Memoizes function results based on arguments", "Limits function call rate", "Logs function calls"], "answer": "Memoizes function results based on arguments" },
+      { "question": "What is the difference between `deepcopy` and `copy`?", "options": ["No difference", "`deepcopy` recursively copies nested objects, `copy` is shallow", "`copy` is recursive, `deepcopy` is shallow", "`deepcopy` is faster"], "answer": "`deepcopy` recursively copies nested objects, `copy` is shallow" },
+      { "question": "What is `asyncio` used for in Python?", "options": ["Multi-threading", "Writing concurrent code using async/await", "Parallel processing", "GPU computation"], "answer": "Writing concurrent code using async/await" },
+      { "question": "What is a descriptor in Python?", "options": ["A docstring", "An object that defines `__get__`, `__set__`, or `__delete__`", "A type hint", "A class decorator"], "answer": "An object that defines `__get__`, `__set__`, or `__delete__`" }
+    ]
+  },
+
+  "Node": {
+    "beginner": [
+      { "question": "What is Node.js?", "options": ["A browser-based JavaScript engine", "A server-side JavaScript runtime built on V8", "A CSS framework", "A database system"], "answer": "A server-side JavaScript runtime built on V8" },
+      { "question": "Which module is used to create an HTTP server in Node.js?", "options": ["fs", "http", "path", "net"], "answer": "http" },
+      { "question": "What does `npm` stand for?", "options": ["Node Package Module", "Node Package Manager", "New Project Manager", "Node Project Module"], "answer": "Node Package Manager" },
+      { "question": "How do you import a module in Node.js (CommonJS)?", "options": ["import module from 'module'", "const module = require('module')", "include('module')", "load('module')"], "answer": "const module = require('module')" },
+      { "question": "What file defines a Node.js project's dependencies?", "options": ["node.config.js", "package.json", "dependencies.json", "npm.json"], "answer": "package.json" },
+      { "question": "What does `process.env` provide?", "options": ["The current process ID", "Environment variables", "The Node version", "The OS platform"], "answer": "Environment variables" },
+      { "question": "Which method reads a file asynchronously in Node.js?", "options": ["fs.readFile()", "fs.read()", "fs.open()", "fs.load()"], "answer": "fs.readFile()" },
+      { "question": "What is Express.js?", "options": ["A database ORM", "A minimal web framework for Node.js", "A testing library", "A bundler tool"], "answer": "A minimal web framework for Node.js" }
+    ],
+    "intermediate": [
+      { "question": "What is middleware in Express.js?", "options": ["A database layer", "Functions that execute during the request-response cycle", "A routing algorithm", "A caching mechanism"], "answer": "Functions that execute during the request-response cycle" },
+      { "question": "What does `next()` do in Express middleware?", "options": ["Ends the response", "Passes control to the next middleware", "Redirects the request", "Logs the request"], "answer": "Passes control to the next middleware" },
+      { "question": "What is the event emitter pattern in Node.js?", "options": ["A DOM event system", "A pattern where objects emit named events and listeners respond", "A pub/sub messaging system", "A timer-based pattern"], "answer": "A pattern where objects emit named events and listeners respond" },
+      { "question": "What is a stream in Node.js?", "options": ["A live video feed", "An abstract interface for working with streaming data", "A database connection", "A WebSocket connection"], "answer": "An abstract interface for working with streaming data" },
+      { "question": "What does `cluster` module do in Node.js?", "options": ["Groups database records", "Allows creating child processes to utilize multi-core CPUs", "Clusters API endpoints", "Groups middleware"], "answer": "Allows creating child processes to utilize multi-core CPUs" },
+      { "question": "What is the purpose of `dotenv` package?", "options": ["To minify code", "To load environment variables from a .env file", "To create dot notation objects", "To format JSON"], "answer": "To load environment variables from a .env file" },
+      { "question": "What is CORS and why is it needed?", "options": ["A caching strategy", "A security mechanism controlling cross-origin HTTP requests", "A compression algorithm", "A routing pattern"], "answer": "A security mechanism controlling cross-origin HTTP requests" },
+      { "question": "What does `app.use(express.json())` do?", "options": ["Converts responses to JSON", "Parses incoming JSON request bodies", "Validates JSON schemas", "Stringifies JSON responses"], "answer": "Parses incoming JSON request bodies" }
+    ],
+    "advanced": [
+      { "question": "What is the Node.js event loop?", "options": ["A for loop for events", "A mechanism that processes async callbacks in phases", "A DOM event handler", "A timer loop"], "answer": "A mechanism that processes async callbacks in phases" },
+      { "question": "What are worker threads in Node.js?", "options": ["Background HTTP workers", "Threads for CPU-intensive tasks without blocking the event loop", "Database connection threads", "Child processes"], "answer": "Threads for CPU-intensive tasks without blocking the event loop" },
+      { "question": "What is the difference between `process.nextTick` and `setImmediate`?", "options": ["No difference", "`process.nextTick` fires before I/O events, `setImmediate` fires after", "`setImmediate` fires before I/O, `process.nextTick` fires after", "Both fire at the same time"], "answer": "`process.nextTick` fires before I/O events, `setImmediate` fires after" },
+      { "question": "What is backpressure in Node.js streams?", "options": ["Network congestion", "When a writable stream signals it cannot accept more data", "Memory overflow", "CPU throttling"], "answer": "When a writable stream signals it cannot accept more data" },
+      { "question": "What is the purpose of `libuv` in Node.js?", "options": ["A UI library", "A C library providing the event loop and async I/O", "A logging utility", "A virtual machine"], "answer": "A C library providing the event loop and async I/O" },
+      { "question": "What is graceful shutdown in a Node.js server?", "options": ["Restarting the server", "Stopping the server after finishing in-flight requests", "Killing the process immediately", "Pausing new connections"], "answer": "Stopping the server after finishing in-flight requests" },
+      { "question": "What does `--inspect` flag do when running Node.js?", "options": ["Inspects package.json", "Enables the V8 inspector for debugging", "Validates the code syntax", "Runs in strict mode"], "answer": "Enables the V8 inspector for debugging" },
+      { "question": "What is the purpose of `pm2` in Node.js deployments?", "options": ["A package manager", "A process manager for keeping Node apps alive and managing clusters", "A testing framework", "A build tool"], "answer": "A process manager for keeping Node apps alive and managing clusters" }
+    ]
+  },
+
+  "HTML": {
+    "beginner": [
+      { "question": "What does HTML stand for?", "options": ["HyperText Markup Language", "HighText Machine Language", "HyperText Machine Language", "HyperTransfer Markup Language"], "answer": "HyperText Markup Language" },
+      { "question": "Which tag is used to create a hyperlink?", "options": ["<link>", "<a>", "<href>", "<url>"], "answer": "<a>" },
+      { "question": "Which HTML element defines the largest heading?", "options": ["<h6>", "<heading>", "<h1>", "<head>"], "answer": "<h1>" },
+      { "question": "What attribute specifies the URL of a hyperlink?", "options": ["src", "href", "link", "url"], "answer": "href" },
+      { "question": "Which tag is used to insert an image?", "options": ["<image>", "<img>", "<pic>", "<src>"], "answer": "<img>" },
+      { "question": "What does the `alt` attribute on an image do?", "options": ["Sets image alignment", "Provides alternative text for accessibility", "Sets the image title", "Defines image size"], "answer": "Provides alternative text for accessibility" },
+      { "question": "Which HTML tag creates an unordered list?", "options": ["<ol>", "<li>", "<ul>", "<list>"], "answer": "<ul>" },
+      { "question": "What is the correct HTML element for inserting a line break?", "options": ["<break>", "<lb>", "<br>", "<newline>"], "answer": "<br>" }
+    ],
+    "intermediate": [
+      { "question": "What is the purpose of the `<meta charset='UTF-8'>` tag?", "options": ["Sets the page title", "Specifies the character encoding for the document", "Links a stylesheet", "Defines the viewport"], "answer": "Specifies the character encoding for the document" },
+      { "question": "What does the `data-*` attribute do in HTML5?", "options": ["Stores data in a database", "Stores custom data private to the page or application", "Fetches external data", "Validates form data"], "answer": "Stores custom data private to the page or application" },
+      { "question": "What is the difference between `<section>` and `<div>`?", "options": ["No difference", "`<section>` is semantic and represents a thematic grouping", "`<div>` is semantic", "`<section>` is inline"], "answer": "`<section>` is semantic and represents a thematic grouping" },
+      { "question": "What does the `defer` attribute on a `<script>` tag do?", "options": ["Delays script execution until after HTML parsing", "Disables the script", "Loads the script asynchronously", "Defers CSS loading"], "answer": "Delays script execution until after HTML parsing" },
+      { "question": "What is the purpose of `<figure>` and `<figcaption>`?", "options": ["To create charts", "To associate a caption with self-contained content like images", "To define a figure in math", "To create a bordered box"], "answer": "To associate a caption with self-contained content like images" },
+      { "question": "What does the `required` attribute do on a form input?", "options": ["Makes the field read-only", "Prevents form submission if the field is empty", "Adds a red border", "Marks the field as optional"], "answer": "Prevents form submission if the field is empty" },
+      { "question": "What is the purpose of `<template>` tag in HTML5?", "options": ["Defines a page template", "Holds client-side content not rendered on page load", "Creates a CSS template", "Defines a reusable component"], "answer": "Holds client-side content not rendered on page load" },
+      { "question": "What does `<picture>` element allow you to do?", "options": ["Embed videos", "Specify multiple image sources for responsive images", "Create image galleries", "Add image filters"], "answer": "Specify multiple image sources for responsive images" }
+    ],
+    "advanced": [
+      { "question": "What is the Shadow DOM?", "options": ["A hidden DOM for malicious scripts", "An encapsulated DOM tree attached to an element", "A server-side DOM", "A virtual DOM implementation"], "answer": "An encapsulated DOM tree attached to an element" },
+      { "question": "What are Web Components?", "options": ["React components", "A set of web platform APIs for creating reusable custom elements", "Bootstrap components", "Angular directives"], "answer": "A set of web platform APIs for creating reusable custom elements" },
+      { "question": "What is the purpose of ARIA roles?", "options": ["To style elements", "To improve accessibility by defining element roles for assistive technologies", "To add animations", "To define routing"], "answer": "To improve accessibility by defining element roles for assistive technologies" },
+      { "question": "What does the `contenteditable` attribute do?", "options": ["Enables spell check", "Makes an element's content editable by the user", "Locks content from editing", "Enables content encryption"], "answer": "Makes an element's content editable by the user" },
+      { "question": "What is the purpose of `<dialog>` element?", "options": ["Creates a chat dialog", "Represents a dialog box or interactive component", "Defines a database dialog", "Creates a tooltip"], "answer": "Represents a dialog box or interactive component" },
+      { "question": "What does the `loading='lazy'` attribute on images do?", "options": ["Loads images faster", "Defers loading of off-screen images until they are near the viewport", "Compresses images", "Loads images in low quality first"], "answer": "Defers loading of off-screen images until they are near the viewport" },
+      { "question": "What is the `<slot>` element used for in Web Components?", "options": ["A time slot scheduler", "A placeholder inside a shadow DOM for user-provided markup", "A form input slot", "A CSS grid slot"], "answer": "A placeholder inside a shadow DOM for user-provided markup" },
+      { "question": "What does the `crossorigin` attribute on `<script>` or `<img>` do?", "options": ["Blocks cross-origin requests", "Configures CORS settings for the fetched resource", "Enables cross-browser support", "Defines cross-origin redirects"], "answer": "Configures CORS settings for the fetched resource" }
+    ]
+  },
+
+  "CSS": {
+    "beginner": [
+      { "question": "What does CSS stand for?", "options": ["Cascading Style Sheets", "Creative Style System", "Computer Style Sheets", "Colorful Style Syntax"], "answer": "Cascading Style Sheets" },
+      { "question": "Which property changes the text color in CSS?", "options": ["font-color", "text-color", "color", "foreground"], "answer": "color" },
+      { "question": "How do you select an element with id `header` in CSS?", "options": [".header", "#header", "header", "*header"], "answer": "#header" },
+      { "question": "Which CSS property controls the space inside an element's border?", "options": ["margin", "padding", "spacing", "border-space"], "answer": "padding" },
+      { "question": "What value of `display` makes an element a block-level element?", "options": ["inline", "block", "flex", "grid"], "answer": "block" },
+      { "question": "Which property sets the background color?", "options": ["bg-color", "background-color", "color-background", "fill"], "answer": "background-color" },
+      { "question": "How do you make text bold in CSS?", "options": ["font-style: bold", "text-weight: bold", "font-weight: bold", "text-style: bold"], "answer": "font-weight: bold" },
+      { "question": "Which CSS property controls the font size?", "options": ["text-size", "font-size", "size", "text-style"], "answer": "font-size" }
+    ],
+    "intermediate": [
+      { "question": "What is the CSS box model?", "options": ["A 3D rendering model", "Content, padding, border, and margin layers around an element", "A flexbox layout model", "A grid-based layout system"], "answer": "Content, padding, border, and margin layers around an element" },
+      { "question": "What does `position: absolute` do?", "options": ["Positions relative to the viewport", "Positions relative to the nearest positioned ancestor", "Removes the element from flow and positions relative to the document", "Fixes the element to the screen"], "answer": "Positions relative to the nearest positioned ancestor" },
+      { "question": "What is a CSS pseudo-class?", "options": ["A fake class", "A keyword added to a selector for a special state like :hover", "A class defined in JavaScript", "A deprecated CSS feature"], "answer": "A keyword added to a selector for a special state like :hover" },
+      { "question": "What does `z-index` control?", "options": ["Zoom level", "The stacking order of positioned elements", "The element's opacity", "The element's size"], "answer": "The stacking order of positioned elements" },
+      { "question": "What is the difference between `em` and `rem` units?", "options": ["No difference", "`em` is relative to parent font-size, `rem` is relative to root font-size", "`rem` is relative to parent, `em` is relative to root", "`em` is absolute, `rem` is relative"], "answer": "`em` is relative to parent font-size, `rem` is relative to root font-size" },
+      { "question": "What does `overflow: hidden` do?", "options": ["Hides the element", "Clips content that overflows the element's box", "Adds a scrollbar", "Removes padding"], "answer": "Clips content that overflows the element's box" },
+      { "question": "What is a CSS media query used for?", "options": ["Querying a database", "Applying styles based on device characteristics like screen width", "Loading media files", "Animating elements"], "answer": "Applying styles based on device characteristics like screen width" },
+      { "question": "What does `flex: 1` mean in a flex container?", "options": ["Sets flex-direction to row", "Makes the item grow to fill available space equally", "Sets one flex item", "Enables flexbox"], "answer": "Makes the item grow to fill available space equally" }
+    ],
+    "advanced": [
+      { "question": "What is CSS specificity?", "options": ["The speed of CSS rendering", "A weight system determining which CSS rule applies when multiple rules match", "The order of CSS properties", "The number of CSS rules"], "answer": "A weight system determining which CSS rule applies when multiple rules match" },
+      { "question": "What are CSS custom properties (variables)?", "options": ["Vendor-prefixed properties", "User-defined properties prefixed with `--` that can be reused", "JavaScript-controlled properties", "Deprecated CSS features"], "answer": "User-defined properties prefixed with `--` that can be reused" },
+      { "question": "What is the `will-change` property used for?", "options": ["Predicts future styles", "Hints to the browser about upcoming changes for optimization", "Defines conditional styles", "Marks deprecated properties"], "answer": "Hints to the browser about upcoming changes for optimization" },
+      { "question": "What is a CSS stacking context?", "options": ["A stack of stylesheets", "A three-dimensional conceptual space for z-index layering", "A CSS preprocessor feature", "A flexbox stacking mode"], "answer": "A three-dimensional conceptual space for z-index layering" },
+      { "question": "What does `contain: layout` do in CSS?", "options": ["Contains the layout in a div", "Isolates an element's layout from the rest of the page", "Locks the layout", "Defines a contained grid"], "answer": "Isolates an element's layout from the rest of the page" },
+      { "question": "What is the purpose of `@layer` in CSS?", "options": ["Adds a visual layer", "Defines cascade layers to control specificity order", "Creates z-index layers", "Defines animation layers"], "answer": "Defines cascade layers to control specificity order" },
+      { "question": "What is the difference between `transform` and `position` for animations?", "options": ["No difference", "`transform` uses GPU compositing and doesn't trigger layout reflow", "`position` is faster", "`transform` triggers reflow"], "answer": "`transform` uses GPU compositing and doesn't trigger layout reflow" },
+      { "question": "What does `aspect-ratio` property do?", "options": ["Sets image resolution", "Maintains a preferred width-to-height ratio for an element", "Defines the viewport ratio", "Controls font aspect ratio"], "answer": "Maintains a preferred width-to-height ratio for an element" }
+    ]
+  },
+
+  "MongoDB": {
+    "beginner": [
+      { "question": "What type of database is MongoDB?", "options": ["Relational", "Document-oriented NoSQL", "Graph", "Key-value"], "answer": "Document-oriented NoSQL" },
+      { "question": "What format does MongoDB use to store documents?", "options": ["XML", "CSV", "BSON (Binary JSON)", "Plain text"], "answer": "BSON (Binary JSON)" },
+      { "question": "What is a collection in MongoDB?", "options": ["A row in a table", "A group of documents, similar to a table in SQL", "A database index", "A schema definition"], "answer": "A group of documents, similar to a table in SQL" },
+      { "question": "Which command inserts a document into a collection?", "options": ["db.collection.add()", "db.collection.insert()", "db.collection.insertOne()", "db.collection.create()"], "answer": "db.collection.insertOne()" },
+      { "question": "What is `_id` in MongoDB?", "options": ["A user-defined field", "A unique identifier automatically assigned to each document", "A foreign key", "An index field"], "answer": "A unique identifier automatically assigned to each document" },
+      { "question": "Which method retrieves all documents from a collection?", "options": ["db.collection.getAll()", "db.collection.find()", "db.collection.select()", "db.collection.fetch()"], "answer": "db.collection.find()" },
+      { "question": "What does `db.collection.deleteOne()` do?", "options": ["Deletes the collection", "Deletes the first document matching the filter", "Deletes all matching documents", "Drops the database"], "answer": "Deletes the first document matching the filter" },
+      { "question": "What is Mongoose in the context of MongoDB?", "options": ["A MongoDB GUI tool", "An ODM library for MongoDB and Node.js", "A MongoDB cloud service", "A query optimizer"], "answer": "An ODM library for MongoDB and Node.js" }
+    ],
+    "intermediate": [
+      { "question": "What is an index in MongoDB?", "options": ["A document identifier", "A data structure that improves query performance", "A collection reference", "A schema validator"], "answer": "A data structure that improves query performance" },
+      { "question": "What does the `$lookup` aggregation stage do?", "options": ["Looks up a document by ID", "Performs a left outer join with another collection", "Searches text fields", "Looks up an index"], "answer": "Performs a left outer join with another collection" },
+      { "question": "What is the aggregation pipeline in MongoDB?", "options": ["A data import pipeline", "A framework for data transformation through sequential stages", "A replication pipeline", "A backup pipeline"], "answer": "A framework for data transformation through sequential stages" },
+      { "question": "What does `$match` do in an aggregation pipeline?", "options": ["Matches two collections", "Filters documents based on a condition", "Matches field names", "Joins collections"], "answer": "Filters documents based on a condition" },
+      { "question": "What is a replica set in MongoDB?", "options": ["A set of duplicate collections", "A group of MongoDB instances maintaining the same data for redundancy", "A set of indexes", "A backup configuration"], "answer": "A group of MongoDB instances maintaining the same data for redundancy" },
+      { "question": "What does `upsert: true` do in an update operation?", "options": ["Updates all documents", "Inserts a document if no matching document is found", "Undoes the last update", "Updates and sorts documents"], "answer": "Inserts a document if no matching document is found" },
+      { "question": "What is the purpose of `$project` in aggregation?", "options": ["Creates a new project", "Specifies which fields to include or exclude in output documents", "Projects data to another database", "Defines a projection index"], "answer": "Specifies which fields to include or exclude in output documents" },
+      { "question": "What does `db.collection.createIndex({ field: 1 })` do?", "options": ["Creates a descending index", "Creates an ascending index on the specified field", "Creates a unique index", "Creates a text index"], "answer": "Creates an ascending index on the specified field" }
+    ],
+    "advanced": [
+      { "question": "What is sharding in MongoDB?", "options": ["Splitting documents into parts", "Distributing data across multiple machines for horizontal scaling", "Compressing data", "Encrypting collections"], "answer": "Distributing data across multiple machines for horizontal scaling" },
+      { "question": "What is the WiredTiger storage engine?", "options": ["A query optimizer", "MongoDB's default storage engine with document-level concurrency", "A replication engine", "A caching layer"], "answer": "MongoDB's default storage engine with document-level concurrency" },
+      { "question": "What is a covered query in MongoDB?", "options": ["A query with a WHERE clause", "A query satisfied entirely by an index without scanning documents", "A query with aggregation", "A query with joins"], "answer": "A query satisfied entirely by an index without scanning documents" },
+      { "question": "What does `explain('executionStats')` do?", "options": ["Explains the schema", "Returns execution statistics for a query to analyze performance", "Explains aggregation stages", "Returns index statistics"], "answer": "Returns execution statistics for a query to analyze performance" },
+      { "question": "What is a capped collection in MongoDB?", "options": ["A collection with a size limit that overwrites oldest documents", "A collection with a maximum document size", "A read-only collection", "A collection with a fixed schema"], "answer": "A collection with a size limit that overwrites oldest documents" },
+      { "question": "What is the oplog in MongoDB?", "options": ["An operation log for debugging", "A special capped collection recording all write operations for replication", "An error log", "An audit log"], "answer": "A special capped collection recording all write operations for replication" },
+      { "question": "What is a compound index in MongoDB?", "options": ["An index on computed fields", "An index on multiple fields", "An index with compression", "A partial index"], "answer": "An index on multiple fields" },
+      { "question": "What does `readPreference` control in MongoDB?", "options": ["Read permissions", "Which replica set member to read from", "Read timeout settings", "Read buffer size"], "answer": "Which replica set member to read from" }
+    ]
+  },
+
+  "SQL": {
+    "beginner": [
+      { "question": "What does SQL stand for?", "options": ["Structured Query Language", "Simple Query Language", "Standard Query Logic", "Sequential Query Language"], "answer": "Structured Query Language" },
+      { "question": "Which SQL statement retrieves data from a table?", "options": ["GET", "FETCH", "SELECT", "READ"], "answer": "SELECT" },
+      { "question": "Which clause filters rows in a SELECT statement?", "options": ["HAVING", "ORDER BY", "WHERE", "GROUP BY"], "answer": "WHERE" },
+      { "question": "What does `INSERT INTO` do?", "options": ["Updates existing rows", "Adds new rows to a table", "Creates a new table", "Deletes rows"], "answer": "Adds new rows to a table" },
+      { "question": "Which SQL keyword removes duplicate rows from results?", "options": ["UNIQUE", "DISTINCT", "DIFFERENT", "NODUPE"], "answer": "DISTINCT" },
+      { "question": "What does `ORDER BY` do in SQL?", "options": ["Groups rows", "Sorts the result set", "Filters rows", "Joins tables"], "answer": "Sorts the result set" },
+      { "question": "What is a primary key?", "options": ["The first column in a table", "A unique identifier for each row in a table", "A foreign reference", "An indexed column"], "answer": "A unique identifier for each row in a table" },
+      { "question": "Which SQL command deletes all rows from a table without deleting the table?", "options": ["DROP TABLE", "DELETE FROM", "TRUNCATE TABLE", "REMOVE FROM"], "answer": "TRUNCATE TABLE" }
+    ],
+    "intermediate": [
+      { "question": "What is a JOIN in SQL?", "options": ["Combining two databases", "Combining rows from two or more tables based on a related column", "Merging two queries", "Appending rows to a table"], "answer": "Combining rows from two or more tables based on a related column" },
+      { "question": "What is the difference between INNER JOIN and LEFT JOIN?", "options": ["No difference", "INNER JOIN returns only matching rows; LEFT JOIN returns all left rows plus matches", "LEFT JOIN returns only matching rows", "INNER JOIN returns all rows"], "answer": "INNER JOIN returns only matching rows; LEFT JOIN returns all left rows plus matches" },
+      { "question": "What does `GROUP BY` do?", "options": ["Sorts rows", "Groups rows with the same values for aggregate functions", "Filters groups", "Joins tables by group"], "answer": "Groups rows with the same values for aggregate functions" },
+      { "question": "What is the difference between `WHERE` and `HAVING`?", "options": ["No difference", "`WHERE` filters rows before grouping; `HAVING` filters after grouping", "`HAVING` filters before grouping; `WHERE` filters after", "`WHERE` is for joins only"], "answer": "`WHERE` filters rows before grouping; `HAVING` filters after grouping" },
+      { "question": "What is a subquery?", "options": ["A partial query", "A query nested inside another query", "A stored procedure", "A view query"], "answer": "A query nested inside another query" },
+      { "question": "What does `COUNT(*)` return?", "options": ["The sum of all values", "The number of rows in the result set", "The number of columns", "The number of tables"], "answer": "The number of rows in the result set" },
+      { "question": "What is a foreign key?", "options": ["A key from another database", "A column that references the primary key of another table", "An encrypted key", "A composite key"], "answer": "A column that references the primary key of another table" },
+      { "question": "What does `COALESCE()` do in SQL?", "options": ["Combines two strings", "Returns the first non-NULL value in a list", "Counts non-null values", "Converts data types"], "answer": "Returns the first non-NULL value in a list" }
+    ],
+    "advanced": [
+      { "question": "What is a CTE (Common Table Expression)?", "options": ["A temporary stored procedure", "A named temporary result set defined with WITH clause", "A cross-table expression", "A computed table expression"], "answer": "A named temporary result set defined with WITH clause" },
+      { "question": "What is a window function in SQL?", "options": ["A function for GUI windows", "A function that performs calculations across a set of rows related to the current row", "A function for windowed queries", "A function that creates views"], "answer": "A function that performs calculations across a set of rows related to the current row" },
+      { "question": "What does `PARTITION BY` do in a window function?", "options": ["Partitions the database", "Divides the result set into partitions for the window function", "Creates table partitions", "Splits a query into parts"], "answer": "Divides the result set into partitions for the window function" },
+      { "question": "What is database normalization?", "options": ["Converting data to normal form", "Organizing data to reduce redundancy and improve integrity", "Normalizing query performance", "Standardizing column names"], "answer": "Organizing data to reduce redundancy and improve integrity" },
+      { "question": "What is an execution plan in SQL?", "options": ["A deployment plan", "The sequence of operations the database engine uses to execute a query", "A stored procedure plan", "A backup plan"], "answer": "The sequence of operations the database engine uses to execute a query" },
+      { "question": "What is the difference between a clustered and non-clustered index?", "options": ["No difference", "Clustered index determines physical row order; non-clustered is a separate structure", "Non-clustered determines physical order", "Clustered indexes are faster always"], "answer": "Clustered index determines physical row order; non-clustered is a separate structure" },
+      { "question": "What is ACID in database transactions?", "options": ["A query optimization technique", "Atomicity, Consistency, Isolation, Durability — properties of reliable transactions", "A data compression standard", "An indexing strategy"], "answer": "Atomicity, Consistency, Isolation, Durability — properties of reliable transactions" },
+      { "question": "What is a deadlock in SQL?", "options": ["A slow query", "A situation where two transactions block each other waiting for locks", "A corrupted index", "A failed transaction"], "answer": "A situation where two transactions block each other waiting for locks" }
+    ]
+  },
+
+  "Git": {
+    "beginner": [
+      { "question": "What is Git?", "options": ["A programming language", "A distributed version control system", "A code editor", "A deployment tool"], "answer": "A distributed version control system" },
+      { "question": "Which command initializes a new Git repository?", "options": ["git start", "git create", "git init", "git new"], "answer": "git init" },
+      { "question": "What does `git clone` do?", "options": ["Creates a new branch", "Copies a remote repository to your local machine", "Clones a commit", "Merges branches"], "answer": "Copies a remote repository to your local machine" },
+      { "question": "Which command stages changes for a commit?", "options": ["git commit", "git push", "git add", "git stage"], "answer": "git add" },
+      { "question": "What does `git status` show?", "options": ["The commit history", "The current branch and state of working directory and staging area", "Remote repository info", "Diff of changes"], "answer": "The current branch and state of working directory and staging area" },
+      { "question": "Which command creates a new branch?", "options": ["git new branch", "git branch <name>", "git create branch", "git checkout branch"], "answer": "git branch <name>" },
+      { "question": "What does `git pull` do?", "options": ["Pushes changes to remote", "Fetches and merges changes from the remote repository", "Creates a pull request", "Pulls a specific file"], "answer": "Fetches and merges changes from the remote repository" },
+      { "question": "What does `git log` display?", "options": ["Error logs", "The commit history of the repository", "Remote branches", "Staged files"], "answer": "The commit history of the repository" }
+    ],
+    "intermediate": [
+      { "question": "What is the difference between `git merge` and `git rebase`?", "options": ["No difference", "`merge` creates a merge commit; `rebase` replays commits on top of another branch", "`rebase` creates a merge commit; `merge` replays commits", "`merge` is for local, `rebase` is for remote"], "answer": "`merge` creates a merge commit; `rebase` replays commits on top of another branch" },
+      { "question": "What does `git stash` do?", "options": ["Deletes uncommitted changes", "Temporarily saves uncommitted changes", "Commits changes with a stash message", "Pushes changes to a stash branch"], "answer": "Temporarily saves uncommitted changes" },
+      { "question": "What is a `.gitignore` file?", "options": ["A file that lists ignored commits", "A file specifying intentionally untracked files to ignore", "A file for Git configuration", "A file listing remote branches"], "answer": "A file specifying intentionally untracked files to ignore" },
+      { "question": "What does `git cherry-pick` do?", "options": ["Selects the best commit", "Applies a specific commit from one branch to another", "Picks files to stage", "Selects a merge strategy"], "answer": "Applies a specific commit from one branch to another" },
+      { "question": "What is a detached HEAD state?", "options": ["A broken repository", "When HEAD points to a commit instead of a branch", "When the HEAD file is missing", "When no commits exist"], "answer": "When HEAD points to a commit instead of a branch" },
+      { "question": "What does `git reset --hard` do?", "options": ["Resets only staged changes", "Resets the working directory and staging area to a specific commit", "Resets the remote branch", "Resets only the commit message"], "answer": "Resets the working directory and staging area to a specific commit" },
+      { "question": "What is the purpose of `git fetch`?", "options": ["Merges remote changes", "Downloads remote changes without merging them", "Fetches a specific file", "Fetches commit messages"], "answer": "Downloads remote changes without merging them" },
+      { "question": "What does `git diff` show?", "options": ["Differences between branches only", "Changes between commits, branches, or working directory and staging area", "Differences in configuration", "Remote vs local differences only"], "answer": "Changes between commits, branches, or working directory and staging area" }
+    ],
+    "advanced": [
+      { "question": "What is `git bisect` used for?", "options": ["Splitting a repository", "Binary search through commits to find which one introduced a bug", "Bisecting merge conflicts", "Splitting large commits"], "answer": "Binary search through commits to find which one introduced a bug" },
+      { "question": "What is a Git hook?", "options": ["A remote webhook", "A script that runs automatically at certain Git events", "A branch protection rule", "A commit template"], "answer": "A script that runs automatically at certain Git events" },
+      { "question": "What does `git reflog` show?", "options": ["Remote logs", "A log of all HEAD movements including deleted branches and resets", "Rebase logs", "Fetch logs"], "answer": "A log of all HEAD movements including deleted branches and resets" },
+      { "question": "What is the difference between `git revert` and `git reset`?", "options": ["No difference", "`revert` creates a new commit undoing changes; `reset` moves HEAD back", "`reset` creates a new commit; `revert` moves HEAD back", "`revert` is for files, `reset` is for commits"], "answer": "`revert` creates a new commit undoing changes; `reset` moves HEAD back" },
+      { "question": "What is a shallow clone in Git?", "options": ["A clone without branches", "A clone with limited commit history depth", "A clone of a single file", "A clone without tags"], "answer": "A clone with limited commit history depth" },
+      { "question": "What does `git submodule` do?", "options": ["Creates a sub-branch", "Embeds another Git repository inside a repository", "Creates a module file", "Splits a repository into modules"], "answer": "Embeds another Git repository inside a repository" },
+      { "question": "What is the purpose of `git worktree`?", "options": ["Manages work items", "Allows checking out multiple branches simultaneously in separate directories", "Creates a work log", "Manages remote worktrees"], "answer": "Allows checking out multiple branches simultaneously in separate directories" },
+      { "question": "What does `git blame` do?", "options": ["Shows error-causing commits", "Shows who last modified each line of a file and in which commit", "Blames a specific author", "Shows merge conflicts"], "answer": "Shows who last modified each line of a file and in which commit" }
+    ]
+  },
+
+  "DSA": {
+    "beginner": [
+      { "question": "What is an array?", "options": ["A linked list", "A collection of elements stored at contiguous memory locations", "A key-value store", "A tree structure"], "answer": "A collection of elements stored at contiguous memory locations" },
+      { "question": "What is the time complexity of accessing an element in an array by index?", "options": ["O(n)", "O(log n)", "O(1)", "O(n²)"], "answer": "O(1)" },
+      { "question": "What is a stack data structure?", "options": ["FIFO structure", "LIFO structure where elements are added and removed from the top", "A sorted array", "A binary tree"], "answer": "LIFO structure where elements are added and removed from the top" },
+      { "question": "What is a queue data structure?", "options": ["LIFO structure", "FIFO structure where elements are added at the back and removed from the front", "A sorted list", "A hash table"], "answer": "FIFO structure where elements are added at the back and removed from the front" },
+      { "question": "What is a linked list?", "options": ["An array with links", "A sequence of nodes where each node points to the next", "A doubly-indexed array", "A circular array"], "answer": "A sequence of nodes where each node points to the next" },
+      { "question": "What is Big O notation used for?", "options": ["Measuring memory usage only", "Describing the upper bound of an algorithm's time or space complexity", "Counting lines of code", "Measuring network speed"], "answer": "Describing the upper bound of an algorithm's time or space complexity" },
+      { "question": "What is a binary search?", "options": ["Searching two arrays simultaneously", "A search algorithm that halves the search space each step on a sorted array", "A search using two pointers", "A brute-force search"], "answer": "A search algorithm that halves the search space each step on a sorted array" },
+      { "question": "What is the time complexity of linear search?", "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"], "answer": "O(n)" }
+    ],
+    "intermediate": [
+      { "question": "What is a hash table?", "options": ["A sorted table", "A data structure that maps keys to values using a hash function", "A table with hashed rows", "A binary search tree"], "answer": "A data structure that maps keys to values using a hash function" },
+      { "question": "What is a binary search tree (BST)?", "options": ["A tree with two children always", "A tree where left child < parent < right child", "A balanced tree", "A heap structure"], "answer": "A tree where left child < parent < right child" },
+      { "question": "What is the time complexity of quicksort on average?", "options": ["O(n²)", "O(n log n)", "O(n)", "O(log n)"], "answer": "O(n log n)" },
+      { "question": "What is a graph in data structures?", "options": ["A chart", "A collection of nodes connected by edges", "A sorted tree", "A matrix"], "answer": "A collection of nodes connected by edges" },
+      { "question": "What is BFS (Breadth-First Search)?", "options": ["Searching depth-first", "Traversing a graph level by level using a queue", "Searching using recursion", "Traversing a tree in-order"], "answer": "Traversing a graph level by level using a queue" },
+      { "question": "What is a heap data structure?", "options": ["A stack variant", "A complete binary tree satisfying the heap property (min or max)", "A hash table variant", "A sorted linked list"], "answer": "A complete binary tree satisfying the heap property (min or max)" },
+      { "question": "What is dynamic programming?", "options": ["Programming with dynamic types", "Solving problems by breaking them into overlapping subproblems and caching results", "A programming paradigm", "Runtime code generation"], "answer": "Solving problems by breaking them into overlapping subproblems and caching results" },
+      { "question": "What is the space complexity of merge sort?", "options": ["O(1)", "O(log n)", "O(n)", "O(n²)"], "answer": "O(n)" }
+    ],
+    "advanced": [
+      { "question": "What is a trie data structure?", "options": ["A type of binary tree", "A tree-like structure for storing strings with shared prefixes", "A sorted hash map", "A balanced BST"], "answer": "A tree-like structure for storing strings with shared prefixes" },
+      { "question": "What is Dijkstra's algorithm used for?", "options": ["Sorting arrays", "Finding the shortest path in a weighted graph", "Traversing binary trees", "Finding strongly connected components"], "answer": "Finding the shortest path in a weighted graph" },
+      { "question": "What is a segment tree?", "options": ["A tree for string segments", "A tree for range queries and updates on arrays", "A balanced BST variant", "A tree for network segments"], "answer": "A tree for range queries and updates on arrays" },
+      { "question": "What is the difference between DFS and BFS?", "options": ["No difference", "DFS explores depth-first using a stack; BFS explores breadth-first using a queue", "BFS uses a stack; DFS uses a queue", "DFS is faster always"], "answer": "DFS explores depth-first using a stack; BFS explores breadth-first using a queue" },
+      { "question": "What is amortized time complexity?", "options": ["The worst-case complexity", "The average cost per operation over a sequence of operations", "The best-case complexity", "The space complexity"], "answer": "The average cost per operation over a sequence of operations" },
+      { "question": "What is a Union-Find (Disjoint Set Union) data structure?", "options": ["A set of unions", "A structure for tracking elements partitioned into disjoint sets", "A union of hash tables", "A set intersection structure"], "answer": "A structure for tracking elements partitioned into disjoint sets" },
+      { "question": "What is the Floyd-Warshall algorithm?", "options": ["A sorting algorithm", "An algorithm for finding shortest paths between all pairs of vertices", "A minimum spanning tree algorithm", "A graph coloring algorithm"], "answer": "An algorithm for finding shortest paths between all pairs of vertices" },
+      { "question": "What is a balanced BST and why is it important?", "options": ["A BST with equal nodes on both sides", "A BST that maintains O(log n) height to ensure efficient operations", "A BST with no duplicates", "A BST sorted by insertion order"], "answer": "A BST that maintains O(log n) height to ensure efficient operations" }
+    ]
+  }
+}
