@@ -1,114 +1,20 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { api } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
-  const navigate = useNavigate()
-  const [formData, setFormData] = useState({ email: '', password: '' })
-  const [error, setError] = useState('')
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!formData.email || !formData.password) {
-      setError('Please fill in all fields')
-      return
-    }
-    setError('')
-
-    try {
-      const res = await fetch("http://localhost:5000/api/students/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: formData.email, password: formData.password })
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.message || "Login failed")
-        return
-      }
-
-      localStorage.setItem("studentId", data.student._id)
-      navigate('/dashboard')
-
-    } catch (err) {
-      setError("Something went wrong. Please try again.")
-    }
-  }
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center px-4">
-      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
-
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-blue-700">Welcome Back 👋</h1>
-          <p className="text-gray-500 mt-2 text-sm">Login to continue your learning journey</p>
-        </div>
-
-        {/* Error Message */}
-        {error && (
-          <div className="bg-red-100 text-red-600 text-sm px-4 py-2 rounded-lg mb-4">
-            {error}
-          </div>
-        )}
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 block">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="you@example.com"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 block">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="bg-blue-700 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-800 transition mt-2"
-          >
-            Login
-          </button>
-
-        </form>
-
-        {/* Divider */}
-        <div className="flex items-center my-6">
-          <hr className="flex-grow border-gray-200" />
-          <span className="text-gray-400 text-xs mx-3">OR</span>
-          <hr className="flex-grow border-gray-200" />
-        </div>
-
-        {/* Register Link */}
-        <p className="text-center text-sm text-gray-600">
-          Don't have an account?{' '}
-          <Link to="/register" className="text-blue-700 font-semibold hover:underline">
-            Register here
-          </Link>
-        </p>
-
-      </div>
-    </div>
-  )
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
+  const { authenticate } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const submit = async (event) => {
+    event.preventDefault(); setError(''); setBusy(true);
+    try { const session = await api('/auth/login', { method: 'POST', body: form }); authenticate(session); navigate(location.state?.from || '/dashboard', { replace: true }); }
+    catch (requestError) { setError(requestError.message); }
+    finally { setBusy(false); }
+  };
+  return <div className="auth-page"><section className="auth-aside"><Link className="brand brand-inverse" to="/"><span className="brand-mark">P</span><span>Prashikshan</span></Link><div><p className="eyebrow eyebrow-light">Welcome back</p><h1>Continue building<br />a career with proof.</h1><p>Your learning, applications, milestones, and credits stay connected in one place.</p></div><small>Transparent pathways for experiential learning.</small></section><section className="auth-form-wrap"><form className="auth-form" onSubmit={submit}><Link className="mobile-brand brand" to="/"><span className="brand-mark">P</span>Prashikshan</Link><div><p className="eyebrow">Sign in</p><h2>Your workspace is ready.</h2><p className="muted">Enter your details to continue.</p></div>{error && <p className="form-alert">{error}</p>}<label>Email address<input type="email" autoComplete="email" required value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} placeholder="you@example.com" /></label><label>Password<input type="password" autoComplete="current-password" minLength="8" required value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} placeholder="Your password" /></label><button className="button button-full" disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</button><p className="form-footer">New to Prashikshan? <Link to="/register">Create an account</Link></p></form></section></div>;
 }

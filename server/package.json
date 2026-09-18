@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Prashikshan API - internships, assessment, learning pathways and NEP credits",
   "main": "server.js",
   "dependencies": {
     "accepts": "^2.0.0",
@@ -116,9 +116,10 @@
     "wrappy": "^1.0.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test tests/*.test.js",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "check": "node --check server.js && node --check routes/authRoutes.js && node --check routes/assessmentRoutes.js && node --check routes/courseRoutes.js && node --check routes/internshipRoutes.js && node --check routes/coordinatorRoutes.js"
   },
   "keywords": [],
   "author": "",

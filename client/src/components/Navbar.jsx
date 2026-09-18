@@ -1,55 +1,26 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
+const links = [
+  { to: '/courses', label: 'Learning' },
+  { to: '/internships', label: 'Opportunities' },
+];
 
 export default function Navbar() {
-  const isLoggedIn = !!localStorage.getItem('studentId')
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    localStorage.removeItem('studentId')
-    navigate('/')
-  }
-
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const dashboardPath = user?.role === 'partner' ? '/partner' : user?.role === 'coordinator' ? '/coordination' : '/dashboard';
+  const onLogout = () => { logout(); navigate('/'); };
   return (
-    <nav className="bg-blue-700 text-white px-8 py-4 flex justify-between items-center shadow-md">
-      {/* Logo */}
-      <Link to="/" className="text-2xl font-bold tracking-wide">
-        🎓 Prashikshan
-      </Link>
-
-      {/* Nav Links */}
-      <div className="flex gap-6 text-sm font-medium">
-        <Link to="/" className="hover:text-yellow-300 transition">Home</Link>
-        <Link to="/courses" className="hover:text-yellow-300 transition">Courses</Link>
-        <Link to="/internships" className="hover:text-yellow-300 transition">Internships</Link>
-        <Link to="/dashboard" className="hover:text-yellow-300 transition">Dashboard</Link>
+    <header className="site-header">
+      <Link to="/" className="brand" aria-label="Prashikshan home"><span className="brand-mark">P</span><span>Prashikshan</span></Link>
+      <nav className="nav-links" aria-label="Primary navigation">
+        {links.map((link) => <NavLink key={link.to} to={link.to}>{link.label}</NavLink>)}
+        {user && <NavLink to={dashboardPath}>Workspace</NavLink>}
+      </nav>
+      <div className="nav-account">
+        {user ? <><span className="avatar">{user.name?.slice(0, 1).toUpperCase()}</span><span className="account-name">{user.name?.split(' ')[0]}</span><button className="button button-ghost button-small" onClick={onLogout}>Log out</button></> : <><Link className="text-link" to="/login">Sign in</Link><Link className="button button-small" to="/register">Create account</Link></>}
       </div>
-
-      {/* Auth Buttons */}
-      <div className="flex gap-3">
-        {isLoggedIn ? (
-          <button
-            onClick={handleLogout}
-            className="border border-white px-4 py-1.5 rounded-full hover:bg-white hover:text-blue-700 transition text-sm"
-          >
-            Logout
-          </button>
-        ) : (
-          <>
-            <Link
-              to="/login"
-              className="border border-white px-4 py-1.5 rounded-full hover:bg-white hover:text-blue-700 transition text-sm"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="bg-yellow-400 text-blue-900 px-4 py-1.5 rounded-full font-semibold hover:bg-yellow-300 transition text-sm"
-            >
-              Register
-            </Link>
-          </>
-        )}
-      </div>
-    </nav>
-  )
+    </header>
+  );
 }
