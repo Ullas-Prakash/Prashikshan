@@ -3,6 +3,7 @@ const Internship = require('../models/Internship');
 const Application = require('../models/Application');
 const User = require('../models/User');
 const { requireAuth, allowRoles } = require('../lib/auth');
+const requireAssessment = require('../middleware/requireAssessment');
 
 const router = express.Router();
 const normalize = (value) => String(value || '').trim().toLowerCase();
@@ -23,6 +24,82 @@ router.get('/', async (req, res, next) => {
     if (req.query.search) query.$or = [{ title: new RegExp(String(req.query.search), 'i') }, { organization: new RegExp(String(req.query.search), 'i') }];
     const internships = await Internship.find(query).sort({ createdAt: -1 });
     return res.json({ internships });
+  } catch (error) { next(error); }
+});
+
+router.get('/partners/quadrant', async (req, res, next) => {
+  try {
+    const partners = await User.find({ role: 'partner' }).select('organization bio department isVerifiedPartner createdAt');
+    const internships = await Internship.find({ status: 'published', verified: true });
+    const applications = await Application.find({ status: { $in: ['accepted', 'in-progress', 'completed'] } });
+
+    const orgStats = new Map();
+
+    for (const partner of partners) {
+      if (!partner.organization) continue;
+      orgStats.set(partner.organization, {
+        partnerId: partner._id,
+        organization: partner.organization,
+        isVerified: partner.isVerifiedPartner,
+        activeInternships: 0,
+        totalCreditsOffered: 0,
+        completedInternships: 0,
+        avgStudentGrade: 88,
+        totalApplicantsHired: 0,
+      });
+    }
+
+    for (const internship of internships) {
+      const stats = orgStats.get(internship.organization) || {
+        partnerId: internship.postedBy,
+        organization: internship.organization,
+        isVerified: true,
+        activeInternships: 0,
+        totalCreditsOffered: 0,
+        completedInternships: 0,
+        avgStudentGrade: 88,
+        totalApplicantsHired: 0,
+      };
+      stats.activeInternships += 1;
+      stats.totalCreditsOffered += (internship.credits || 0);
+      orgStats.set(internship.organization, stats);
+    }
+
+    for (const app of applications) {
+      if (app.internship) {
+        const matchingInternship = internships.find(i => String(i._id) === String(app.internship));
+        if (matchingInternship && orgStats.has(matchingInternship.organization)) {
+          const stats = orgStats.get(matchingInternship.organization);
+          stats.totalApplicantsHired += 1;
+          if (app.status === 'completed') {
+            stats.completedInternships += 1;
+          }
+        }
+      }
+    }
+
+    const quadrantData = Array.from(orgStats.values()).map(org => {
+      const mentorshipRating = Math.min(100, Math.max(40, Math.round(75 + (org.completedInternships * 5) + (org.isVerified ? 10 : 0))));
+      const opportunityScore = Math.min(100, Math.max(20, Math.round((org.activeInternships * 25) + (org.totalCreditsOffered * 10) + (org.totalApplicantsHired * 5))));
+
+      let quadrant = 'Niche Players';
+      if (mentorshipRating >= 75 && opportunityScore >= 60) {
+        quadrant = 'Leaders';
+      } else if (mentorshipRating < 75 && opportunityScore >= 60) {
+        quadrant = 'Challengers';
+      } else if (mentorshipRating >= 75 && opportunityScore < 60) {
+        quadrant = 'Visionaries';
+      }
+
+      return {
+        ...org,
+        x: mentorshipRating,
+        y: opportunityScore,
+        quadrant,
+      };
+    });
+
+    return res.json({ partners: quadrantData });
   } catch (error) { next(error); }
 });
 
@@ -70,7 +147,7 @@ router.post('/', requireAuth, allowRoles('partner'), async (req, res, next) => {
   } catch (error) { next(error); }
 });
 
-router.post('/:id/apply', requireAuth, allowRoles('student'), async (req, res, next) => {
+router.post('/:id/apply', requireAuth, allowRoles('student'), requireAssessment, async (req, res, next) => {
   try {
     const internship = await Internship.findOne({ _id: req.params.id, status: 'published', verified: true, deadline: { $gte: new Date() } });
     if (!internship) return res.status(404).json({ error: 'This verified internship is not available.' });

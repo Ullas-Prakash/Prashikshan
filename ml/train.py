@@ -4,26 +4,24 @@ from sklearn.ensemble import RandomForestClassifier
 import joblib
 import os
 
-# Create folders if not exist
 os.makedirs("data", exist_ok=True)
 os.makedirs("models", exist_ok=True)
 
-skills = ["JS", "React", "Python", "Node"]
+skills = ["javascript", "react", "python", "nodejs"]
 
 data = []
 
-# Generate dataset
+# Generate synthetic dataset aligned with 3-tier competency engine
 for _ in range(1000):
     row = {}
-
     for skill in skills:
-        score = random.randint(0, 10)
-        row[skill] = score / 10  # normalize
+        score = random.randint(0, 100) / 100.0  # normalized float 0.0 - 1.0
+        row[skill] = score
 
-        # assign level
-        if score < 4:
+        # 3-tier classification: beginner (<0.50), intermediate (0.50-0.79), legend (>=0.80)
+        if score < 0.50:
             row[f"{skill}_level"] = 0
-        elif score < 7:
+        elif score < 0.80:
             row[f"{skill}_level"] = 1
         else:
             row[f"{skill}_level"] = 2
@@ -31,21 +29,13 @@ for _ in range(1000):
     data.append(row)
 
 df = pd.DataFrame(data)
-
-# Save dataset
 df.to_csv("data/students.csv", index=False)
 
-# Features
-X = df[["JS", "React", "Python", "Node"]]
+X = df[["javascript", "react", "python", "nodejs"]]
+y = df[["javascript_level", "react_level", "python_level", "nodejs_level"]]
 
-# Multi-output targets
-y = df[["JS_level", "React_level", "Python_level", "Node_level"]]
-
-# Train model
-model = RandomForestClassifier()
+model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X, y)
 
-# Save model
 joblib.dump(model, "models/model.pkl")
-
-print("✅ Model trained and saved successfully")
+print("[OK] Model trained and saved successfully with 3-tier classification (beginner, intermediate, legend).")

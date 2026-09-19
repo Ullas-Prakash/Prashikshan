@@ -20,6 +20,7 @@ function publicUser(user) {
     skillProfile: data.skillProfile || [],
     creditTotal: (data.credits || []).reduce((sum, item) => sum + item.credits, 0),
     credits: data.credits || [],
+    isAssessed: Boolean(data.isAssessed),
     isVerifiedPartner: Boolean(data.isVerifiedPartner),
     createdAt: data.createdAt,
   };

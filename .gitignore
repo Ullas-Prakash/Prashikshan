@@ -9,3 +9,10 @@ coverage/
 *.log
 __pycache__/
 *.py[cod]
+
+# Generated certificate PDFs — do not commit
+server/certs/
+
+# Trained ML model binary — regenerate with ml/train.py
+ml/models/model.pkl
+models/model.pkl

@@ -8,11 +8,12 @@ const assessmentQuestionSchema = new mongoose.Schema({
 }, { _id: false });
 
 const resultSchema = new mongoose.Schema({
-  skill: String,
-  score: Number,
-  total: Number,
-  percentage: Number,
-  level: String,
+  skill: { type: String, trim: true, lowercase: true },
+  score: { type: Number, min: 0 },
+  total: { type: Number, min: 0 },
+  percentage: { type: Number, min: 0, max: 100 },
+  // Standardized 3-tier competency levels aligned with User.skillProfile
+  level: { type: String, enum: ['beginner', 'intermediate', 'legend'], default: 'beginner' },
 }, { _id: false });
 
 const assessmentSchema = new mongoose.Schema({

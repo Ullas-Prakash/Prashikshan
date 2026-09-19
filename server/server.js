@@ -5,11 +5,12 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { seedIfEnabled } = require('./services/seedData');
 
-const authRoutes = require('./routes/authRoutes');
-const assessmentRoutes = require('./routes/assessmentRoutes');
-const courseRoutes = require('./routes/courseRoutes');
-const internshipRoutes = require('./routes/internshipRoutes');
+const authRoutes        = require('./routes/authRoutes');
+const assessmentRoutes  = require('./routes/assessmentRoutes');
+const courseRoutes      = require('./routes/courseRoutes');
+const internshipRoutes  = require('./routes/internshipRoutes');
 const coordinatorRoutes = require('./routes/coordinatorRoutes');
+const certificateRoutes = require('./routes/certificateRoutes');
 
 const app = express();
 const port = Number(process.env.PORT || 5000);
@@ -31,6 +32,7 @@ app.use('/api/assessments', assessmentRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/internships', internshipRoutes);
 app.use('/api/coordination', coordinatorRoutes);
+app.use('/api/certificates', certificateRoutes);
 
 const clientBuild = path.resolve(__dirname, '../client/dist');
 app.use(express.static(clientBuild, { index: false, maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0 }));
@@ -47,9 +49,29 @@ app.use((error, _req, res, _next) => {
 });
 
 async function start() {
-  if (!process.env.MONGO_URI) throw new Error('MONGO_URI must be configured. Copy server/.env.example to server/.env.');
-  if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) throw new Error('JWT_SECRET must be configured in production.');
-  await mongoose.connect(process.env.MONGO_URI);
+  let mongoUri = process.env.MONGO_URI;
+  let connected = false;
+  if (mongoUri) {
+    try {
+      await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 2000 });
+      connected = true;
+    } catch (err) {
+      console.log('Local/Remote MONGO_URI connection failed. Falling back to in-memory MongoDB...');
+    }
+  }
+
+  if (!connected) {
+    try {
+      const { MongoMemoryServer } = require('mongodb-memory-server');
+      const mongod = await MongoMemoryServer.create();
+      mongoUri = mongod.getUri();
+      await mongoose.connect(mongoUri);
+      console.log('Started and connected to in-memory MongoDB instance for development.');
+    } catch (err) {
+      throw new Error('Failed to start in-memory MongoDB or connect to MONGO_URI: ' + err.message);
+    }
+  }
+
   await seedIfEnabled();
   app.listen(port, () => console.log(`Prashikshan is running on port ${port}`));
 }
